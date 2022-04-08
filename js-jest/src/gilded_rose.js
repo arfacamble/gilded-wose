@@ -1,3 +1,5 @@
+const restrictRange = (num, min, max) => Math.min(Math.max(num, min), max);
+
 class Item {
   constructor(name, sellIn, quality){
     this.name = name;
@@ -10,8 +12,8 @@ class Shop {
   constructor(items=[]){
     this.items = items;
   }
-  updateShopItems() {
 
+  updateShopItems() {
     for (let i = 0; i < this.items.length; i++) {
       let item = this.items[i];
       if (item.name === 'Sulfuras, Hand of Ragnaros')
@@ -28,43 +30,31 @@ class Shop {
   }
 
   updateItemQuality(item) {
-    if (item.name !== 'Aged Brie' && item.name !== 'Backstage passes to a TAFKAL80ETC concert') {
-      if (item.quality > 0) {
-        item.quality = item.quality - 1;
+    let qualityChange = -1;
+
+    if (item.sellIn <= 0) {
+      qualityChange *= 2;
+    }
+
+    if (item.name === "Aged Brie") {
+      qualityChange *= -1;
+    }
+
+    if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
+      qualityChange = 1;
+      if (item.sellIn <= 0) {
+        qualityChange = -item.quality;
       }
-    } else {
-      if (item.quality < 50) {
-        item.quality = item.quality + 1;
-        if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-          if (item.sellIn < 11) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1;
-            }
-          }
-          if (item.sellIn < 6) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1;
-            }
-          }
-        }
+      else if (item.sellIn <= 5) {
+        qualityChange = 3;
+      }
+      else if (item.sellIn <= 10) {
+        qualityChange = 2;
       }
     }
 
-    if (item.sellIn <= 0) {
-      if (item.name !== 'Aged Brie') {
-        if (item.name !== 'Backstage passes to a TAFKAL80ETC concert') {
-          if (item.quality > 0) {
-            item.quality = item.quality - 1;
-          }
-        } else {
-          item.quality = item.quality - item.quality;
-        }
-      } else {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1;
-        }
-      }
-    }
+    item.quality += qualityChange
+    item.quality = restrictRange(item.quality, 0, 50);
   }
 
 }
