@@ -97,4 +97,24 @@ describe("Gilded Rose", function() {
       expect(items[0].quality).toBe(80);
     });
   });
+
+  describe.skip("Conjured Products", function() {
+    it("should degrade in quality twice as fast with sellIn positive", function() {
+      const gildedRose = new Shop([new Item("Conjured item", 1, 20)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(18);
+    });
+  
+    it("should degrade in quality twice as fast with sellIn negative", function() {
+      const gildedRose = new Shop([new Item("Conjured item", -1, 20)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(16);
+    });
+  
+    it("should not have quality less than zero", function() {
+      const gildedRose = new Shop([new Item("Conjured item", 0, 0)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(0);
+    });
+  });
 });
