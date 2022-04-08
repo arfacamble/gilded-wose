@@ -98,7 +98,7 @@ describe("Gilded Rose", function() {
     });
   });
 
-  describe.skip("Conjured Products", function() {
+  describe("Conjured Products", function() {
     it("should degrade in quality twice as fast with sellIn positive", function() {
       const gildedRose = new Shop([new Item("Conjured item", 1, 20)]);
       const items = gildedRose.updateShopItems();

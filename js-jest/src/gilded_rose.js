@@ -40,6 +40,10 @@ class Shop {
       qualityChange *= -1;
     }
 
+    if (item.name === "Conjured item") {
+      qualityChange *= 2;
+    }
+
     if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
       qualityChange = 1;
       if (item.sellIn <= 0) {
