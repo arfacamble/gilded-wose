@@ -61,22 +61,22 @@ describe("Gilded Rose", function() {
     });
   });
 
-  describe("Standard Perishable Items", function() {
-    it("apple quality goes down by one before sell in", function() {
+  describe("Standard Perishable Items Quality", function() {
+    it("should go down by one before sell in", function() {
       const gildedRose = new Shop([new Item("apple", 10, 10)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(9);
       expect(items[0].quality).toBe(9);
     });
   
-    it("apple quality goes down by two after sell in", function() {
+    it("should go down by two after sell in", function() {
       const gildedRose = new Shop([new Item("apple", 0, 10)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(-1);
       expect(items[0].quality).toBe(8);
     });
   
-    it("apple quality does not go negative", function() {
+    it("should not go negative", function() {
       const gildedRose = new Shop([new Item("apple", 0, 0)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(-1);
@@ -84,14 +84,14 @@ describe("Gilded Rose", function() {
     });
   });
   
-  describe("Sulfuras", function() {
-    it("Sulfuras quality remains 80 after sell by date", function() {
+  describe("Sulfuras Quality", function() {
+    it("should remain at 80 after sell by date", function() {
       const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 0, 80)]);
       const items = gildedRose.updateQuality();
       expect(items[0].quality).toBe(80);
     });
   
-    it("Sulfuras quality remains 80 before sell by date", function() {
+    it("should remains at 80 before sell by date", function() {
       const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 10, 80)]);
       const items = gildedRose.updateQuality();
       expect(items[0].quality).toBe(80);
