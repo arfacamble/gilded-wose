@@ -2,21 +2,21 @@ const {Shop, Item} = require("../src/gilded_rose");
 
 describe("Gilded Rose", function() {
   describe("Gross cheese", function() {
-    it("Aged Brie should increase in quality", function() {
+    it("should increase in quality", function() {
       const gildedRose = new Shop([new Item("Aged Brie", 10, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(9);
       expect(items[0].quality).toBe(6);
     });
   
-    it("Aged Brie should decrease in quality", function() {
+    it("should decrease in quality", function() {
       const gildedRose = new Shop([new Item("Aged Brie", 0, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(-1);
       expect(items[0].quality).toBe(7);
     });
   
-    it("Aged Brie should not increase in quality beyond 50", function() {
+    it("should not increase in quality beyond 50", function() {
       const gildedRose = new Shop([new Item("Aged Brie", 10, 49)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(9);
@@ -25,35 +25,35 @@ describe("Gilded Rose", function() {
   });
 
   describe("Backstage passes", function() {
-    it("Backstage passes should increase in quality by 1 with more than 10 days left", function() {
+    it("should increase in quality by 1 with more than 10 days left", function() {
       const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 12, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(11);
       expect(items[0].quality).toBe(6);
     });
   
-    it("Backstage passes should increase in quality by 2 with more than 5 days left", function() {
+    it("should increase in quality by 2 with more than 5 days left", function() {
       const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 8, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(7);
       expect(items[0].quality).toBe(7);
     });
   
-    it("Backstage passes should increase in quality by 3 with fewer than 5 days left", function() {
+    it("should increase in quality by 3 with fewer than 5 days left", function() {
       const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 3, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(2);
       expect(items[0].quality).toBe(8);
     });
   
-    it("Backstage passes have 0 quality after the show is over", function() {
+    it("should have 0 quality after the show is over", function() {
       const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 0, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(-1);
       expect(items[0].quality).toBe(0);
     });
     
-    it("Backstage passes should not increase in quality beyond 50", function() {
+    it("should not increase in quality beyond 50", function() {
       const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49)]);
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(9);
