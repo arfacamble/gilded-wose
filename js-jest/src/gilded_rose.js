@@ -21,46 +21,51 @@ class Shop {
         continue;
       }
 
-      this.updateItemQuality(item);
+      const qualityChange = this.getItemQualityChange(item);
 
-      item.sellIn = item.sellIn - 1;
+      item.quality += qualityChange
+      item.quality = restrictRange(item.quality, 0, 50);  
+
+      item.sellIn -= 1;
     }
 
     return this.items;
   }
 
-  updateItemQuality(item) {
+  getItemQualityChange(item) {
+    if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
+      return this.getQualityChangeForBackstagePasses(item);
+    }
+    
     let qualityChange = -1;
-
+    
     if (item.sellIn <= 0) {
       qualityChange *= 2;
     }
-
+    
     if (item.name === "Aged Brie") {
       qualityChange *= -1;
     }
-
+    
     if (item.name === "Conjured item") {
       qualityChange *= 2;
     }
 
-    if (item.name === "Backstage passes to a TAFKAL80ETC concert") {
-      qualityChange = 1;
-      if (item.sellIn <= 0) {
-        qualityChange = -item.quality;
-      }
-      else if (item.sellIn <= 5) {
-        qualityChange = 3;
-      }
-      else if (item.sellIn <= 10) {
-        qualityChange = 2;
-      }
-    }
-
-    item.quality += qualityChange
-    item.quality = restrictRange(item.quality, 0, 50);
+    return qualityChange;
   }
-
+  
+  getQualityChangeForBackstagePasses(item) {
+    if (item.sellIn <= 0) {
+      return -item.quality;       // add this to give 0 result
+    }
+    if (item.sellIn > 0 && item.sellIn <= 5) {
+      return 3;
+    }
+    if (item.sellIn > 5 && item.sellIn <= 10) {
+      return 2;
+    }
+    return 1;
+  }
 }
 
 module.exports = {

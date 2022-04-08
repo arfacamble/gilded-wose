@@ -85,14 +85,8 @@ describe("Gilded Rose", function() {
   });
   
   describe("Sulfuras Quality", function() {
-    it("should remain at 80 after sell by date", function() {
-      const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 0, 80)]);
-      const items = gildedRose.updateShopItems();
-      expect(items[0].quality).toBe(80);
-    });
-  
-    it("should remains at 80 before sell by date", function() {
-      const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 10, 80)]);
+    it("should always be 80", function() {
+      const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", Infinity, 80)]);
       const items = gildedRose.updateShopItems();
       expect(items[0].quality).toBe(80);
     });
